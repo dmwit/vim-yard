@@ -28,6 +28,11 @@ def load_local_vimrc():
         # no rc-file, nothing to do
         return
 
+    rc_name_as_vim_string = "'%s'" % rc_name.replace("'","''")
+    # escape wildcards like *, ?, and the like
+    rc_name_as_vim_file = vim.eval('fnameescape(%s)' % rc_name_as_vim_string)
+    vim.command('let b:yard_rc=' + rc_name_as_vim_string)
+
     # demand that vim's encoding be utf-8, so it sees the files we're loading
     # the same way we do
     if vim.options['encoding'] != 'utf-8':
@@ -65,11 +70,7 @@ def load_local_vimrc():
                 pass
         rc_hash_hex = rc_hash.hexdigest()
 
-        # escape wildcards like *, ?, and the like
-        rc_name_as_vim_string = "'%s'" % rc_name.replace("'","''")
-        rc_name_as_vim_file = vim.eval('fnameescape(%s)' % rc_name_as_vim_string)
-        source_command = 'let b:yard_rc=%s | source %s' % (rc_name_as_vim_string, rc_name_as_vim_file)
-        if lines_white: vim.command(source_command)
+        if lines_white: vim.command('source ' + rc_name_as_vim_file)
         else:
             # read the hashes whitelist
             try:
@@ -82,7 +83,7 @@ def load_local_vimrc():
             # We do not catch UnicodeErrors. If the whitelist exists but is
             # corrupted, the human should handle that before we do anything.
 
-            if hash_white: vim.command(source_command)
+            if hash_white: vim.command('source ' + rc_name_as_vim_file)
             # Report the problem. But as a special case, we skip the error
             # reporting if g:yard_rc is alread set to the file currently being
             # edited, as this means the user probably just saw the error and is

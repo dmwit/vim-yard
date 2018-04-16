@@ -38,10 +38,10 @@ you can't be bothered to use a package manager, copy the contents of the
 `plugin` directory into `~/.vim/plugin/`.
 
 Every time you start editing a new file, **yard** will search up the directory
-tree for a file named `.yard`. The first one it finds will be subjected to a
-security check. If the check passes, the file will be `:source`d and its name
-placed in `b:yard_rc` (to aid in editing the rc file). If a `.yard` file is
-found, but it does not pass the check, an error explaining how to review and
+tree for a file named `.yard`. The first one it finds will have its name placed
+in the `b:yard_rc` variable (to aid in viewing and modifying the file) and be
+subjected to a security check. If the check passes, the file will be
+`:source`d. If the check does not pass, an error explaining how to review and
 whitelist the file will be printed.
 
 ## Security
