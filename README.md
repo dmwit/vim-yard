@@ -39,7 +39,8 @@ you can't be bothered to use a package manager, copy the contents of the
 
 Every time you start editing a new file, **yard** will search up the directory
 tree for a file named `.yard`. The first one it finds will be subjected to a
-security check, then `:source`d if it passes the check. If a `.yard` file is
+security check. If the check passes, the file will be `:source`d and its name
+placed in `b:yard_rc` (to aid in editing the rc file). If a `.yard` file is
 found, but it does not pass the check, an error explaining how to review and
 whitelist the file will be printed.
 
@@ -64,6 +65,6 @@ much strain:
 | Language | Lines |
 | -------- | ----- |
 | vimscript | 11 |
-| python | 57 |
+| python | 59 |
 | comments | 33 |
 | error strings | 25 |

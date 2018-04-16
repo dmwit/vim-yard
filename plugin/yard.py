@@ -66,7 +66,9 @@ def load_local_vimrc():
         rc_hash_hex = rc_hash.hexdigest()
 
         # escape wildcards like *, ?, and the like
-        source_command = 'source ' + vim.eval("fnameescape('%s')" % rc_name.replace("'","''"))
+        rc_name_as_vim_string = "'%s'" % rc_name.replace("'","''")
+        rc_name_as_vim_file = vim.eval('fnameescape(%s)' % rc_name_as_vim_string)
+        source_command = 'let b:yard_rc=%s | source %s' % (rc_name_as_vim_string, rc_name_as_vim_file)
         if all_white: vim.command(source_command)
         else:
             # read the hashes whitelist
