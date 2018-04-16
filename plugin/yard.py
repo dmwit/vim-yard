@@ -57,10 +57,10 @@ def load_local_vimrc():
         # We do not catch UnicodeErrors or IOErrors; letting them propagate up to
         # the user for human handling is exactly what's wanted.
         rc_hash = hashlib.sha256()
-        all_white = True
+        lines_white = True
         for line in rc:
             rc_hash.update(line.encode('utf-8'))
-            all_white = all_white and line in line_whitelist
+            lines_white = lines_white and line in line_whitelist
             if line not in line_whitelist:
                 pass
         rc_hash_hex = rc_hash.hexdigest()
@@ -69,7 +69,7 @@ def load_local_vimrc():
         rc_name_as_vim_string = "'%s'" % rc_name.replace("'","''")
         rc_name_as_vim_file = vim.eval('fnameescape(%s)' % rc_name_as_vim_string)
         source_command = 'let b:yard_rc=%s | source %s' % (rc_name_as_vim_string, rc_name_as_vim_file)
-        if all_white: vim.command(source_command)
+        if lines_white: vim.command(source_command)
         else:
             # read the hashes whitelist
             try:
