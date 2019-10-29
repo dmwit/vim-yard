@@ -35,7 +35,7 @@ def load_local_vimrc():
 
     # demand that vim's encoding be utf-8, so it sees the files we're loading
     # the same way we do
-    if vim.options['encoding'] != 'utf-8':
+    if vim.options['encoding'] != b'utf-8':
         sys.stderr.write(
             "Found a local rc file to load, but vim's current encoding isn't utf-8.\n" +
             "To avoid mismatches between our security checks and vim's understanding\n" +
